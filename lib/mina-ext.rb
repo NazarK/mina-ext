@@ -1,7 +1,17 @@
-#set :database, "profres_prod"
-#set :database_dev, "profres_dev"
 #LAUNCH_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin start -p 8080 -d --threaded --threadpool-size 2 --pid #{fetch(:deploy_to)}/shared/thin.pid"
 #SHUTDOWN_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin stop --pid #{fetch(:deploy_to)}/shared/thin.pid || true"
+
+require 'yaml'
+db_config = YAML.load_file("#{Dir.getwd}/config/database.yml")
+
+if fetch(:database).nil?
+  set :database, db_config["production"]["database"]
+end  
+
+if fetch(:database_dev).nil?
+  set :database_dev, db_config["development"]["database"]
+end
+
 
 task :db_zip do
   command 'cd /tmp'

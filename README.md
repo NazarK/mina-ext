@@ -10,6 +10,8 @@ mina backup - backup db and files
 
 mina push m='comment' - push to repo with comment specified by 'm' parameter
 
+mina launch - start (restart server) in production
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,6 +23,8 @@ gem 'mina-ext', github: "NazarK/mina-ext"
 ## Usage
 
 You ssh public key (id_rsa.pub) supposed to be added as authorized key to production server.
+
+zip should be installed on production server.
 
 Add to the end of your mina config/deploy.rb.
 
