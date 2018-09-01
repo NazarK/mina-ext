@@ -1,6 +1,5 @@
 # mina-ext
 
-
 Adds commands to mina. Supposed to work with postgresql.
 
 mina db_pull - backup data (from production on server to local dev database)
@@ -20,6 +19,8 @@ gem 'mina-ext', github: "NazarK/mina-ext"
 ```
 
 ## Usage
+
+You ssh public key (id_rsa.pub) supposed to be added as authorized key to production server.
 
 Add to the end of your mina config/deploy.rb.
 
