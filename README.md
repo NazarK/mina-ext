@@ -1,28 +1,23 @@
-# Mina::Ext
+# mina-ext
 
 
 Adds commands to mina. Supposed to work with postgresql.
 
-db_pull - backup data (from production on server to local dev database)
-files_pull - backup public/system folder
-backup - backup db and files
-push - push to repo with comment specified by 'm' parameter
+mina db_pull - backup data (from production on server to local dev database)
+
+mina files_pull - backup public/system folder
+
+mina backup - backup db and files
+
+mina push m='comment' - push to repo with comment specified by 'm' parameter
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'mina-ext'
+gem 'mina-ext', github: "NazarK/mina-ext"
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install mina-ext
 
 ## Usage
 
@@ -49,7 +44,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mina-ext. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/NazarK/mina-ext. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -57,4 +52,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Mina::Ext project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/mina-ext/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the mina-ext project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/mina-ext/blob/master/CODE_OF_CONDUCT.md).
