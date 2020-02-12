@@ -24,6 +24,7 @@ end
 #download data dump
 task "db:download" do
   puts "downloading"
+  system "mkdir ~/tmp 2>/dev/null"
   system "scp #{fetch(:user)}@#{fetch(:domain)}:/tmp/#{fetch(:database)}_dump.zip ~/tmp/"
   system "rm ~/tmp/#{fetch(:database)}_dump.sql; unzip ~/tmp/#{fetch(:database)}_dump.zip -d ~/tmp"
   puts "data placed in ~/tmp/#{fetch(:database)}_dump.sql"
