@@ -57,15 +57,15 @@ task :push do
   end
 end
 
-task :files_pull do
+task "files:pull" do
   command_line = "rsync -azP root@#{fetch(:domain)}:#{fetch(:deploy_to)}/shared/public/system/ ./public/system"
   puts "running rsync: #{command_line}"
   system command_line
 end
 
 task :backup do
-  system 'mina db_pull'
-  system 'mina files_pull'
+  system 'mina db:pull'
+  system 'mina files:pull'
   puts "DONE: #{Time.now}"
 end
 

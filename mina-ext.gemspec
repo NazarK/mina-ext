@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["nazar.kuliev@gmail.com"]
 
   spec.summary       = "additional commands for mina gem"
-  spec.description   = "adds commands: db_zip, db_pull, db_import, data_pull, backup"
+  spec.description   = "adds commands: db:zip, db:pull, db:import, files:pull, backup"
   spec.homepage      = "https://github.com/NazarK/mina-ext"
   spec.license       = "MIT"
 

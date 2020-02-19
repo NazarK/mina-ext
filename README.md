@@ -2,9 +2,9 @@
 
 Adds commands to mina. Supposed to work with postgresql.
 
-mina db_pull - backup data (from production on server to local dev database)
+mina db:pull - backup data (from production on server to local dev database)
 
-mina files_pull - backup public/system folder
+mina files:pull - backup public/system folder
 
 mina backup - backup db and files
 
@@ -31,7 +31,7 @@ Add to the end of your mina config/deploy.rb.
 
 ```ruby
 
-LAUNCH_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin start -p 8080 -d --threaded --threadpool-size 2 --pid #{fetch(:deploy_to)}/shared/thin.pid"
+LAUNCH_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin start -p 8080 -d --threaded --threadpool-size 2 --pid #{fetch(:deploy_to)}/shared/thin.pid || true"
 SHUTDOWN_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin stop --pid #{fetch(:deploy_to)}/shared/thin.pid || true"
 
 set :database, "production_database_name"
