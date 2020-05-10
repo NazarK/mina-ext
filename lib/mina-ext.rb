@@ -45,6 +45,12 @@ task "db:pull" do
   system 'mina db:import'
 end
 
+#backup current database, so it can be restored with db:import
+task "db:backup" do
+  puts "saving backup to ~/tmp/#{fetch(:database)}_dump.sql"
+  system "pg_dump #{fetch(:database)}>~/tmp/#{fetch(:database)}_dump.sql"
+end
+
 
 task :push do
   #env var (when using "system 'mina push'" in deploy hook for example)
