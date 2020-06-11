@@ -19,7 +19,7 @@ mina push - git commit all changes with empty comment (using '-' as comment)
 mina shell - login to current folder (instead of ssh logging into folder containing current)
 
 ## Notes
-Database functions work with postgresql only.
+Database functions work with postgresql only. Database names are taken from config/database.yml.
 
 ## Requirements
 You ssh public key (id_rsa.pub) supposed to be added as authorized key to production server.
@@ -41,7 +41,4 @@ require 'mina/ext'
 
 ## Profit
 
-You should have 'mina db:pull' and other commands working. It takes names of postgresql databases from database.yml file.
-
-
-
+You should have 'mina db:pull' and other commands working. 
