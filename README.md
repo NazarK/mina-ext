@@ -18,6 +18,13 @@ mina push - git commit all changes with empty comment (using '-' as comment)
 
 mina shell - login to current folder (instead of ssh logging into folder containing current)
 
+## Notes
+Database functions work with postgresql only.
+
+## Requirements
+You ssh public key (id_rsa.pub) supposed to be added as authorized key to production server.
+zip should be installed on production server.
+
 ## Installation
 
 Add this to Gemfile:
@@ -26,20 +33,15 @@ Add this to Gemfile:
 gem 'mina-ext', github: "NazarK/mina-ext"
 ```
 
-## Usage
-
-## Notes
-Database functions work with postgresql only.
-
-## Requirements
-You ssh public key (id_rsa.pub) supposed to be added as authorized key to production server.
-zip should be installed on production server.
-
 Add at top of mina config/deploy.rb.
 
 ```ruby
 require 'mina/ext'
 ```
+
 ## Profit
 
 You should have 'mina db:pull' and other commands working. It takes names of postgresql databases from database.yml file.
+
+
+
