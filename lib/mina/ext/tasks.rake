@@ -1,3 +1,6 @@
+require 'mina/bundler'
+require 'mina/rails'
+
 #LAUNCH_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin start -p 8080 -d --threaded --threadpool-size 2 --pid #{fetch(:deploy_to)}/shared/thin.pid"
 #SHUTDOWN_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin stop --pid #{fetch(:deploy_to)}/shared/thin.pid || true"
 
@@ -13,7 +16,7 @@ if fetch(:database_dev).nil?
 end
 
 
-#zip on remote server
+desc 'zip on remote server'
 task "db:zip" do
   command 'cd /tmp'
   puts "dumping data remotely"
@@ -21,7 +24,7 @@ task "db:zip" do
   command "rm #{fetch(:database)}_dump.zip; zip #{fetch(:database)}_dump #{fetch(:database)}_dump.sql; rm #{fetch(:database)}_dump.sql"
 end
 
-#download data dump
+desc 'download data dump'
 task "db:download" do
   puts "downloading"
   system "mkdir ~/tmp 2>/dev/null"
@@ -30,7 +33,7 @@ task "db:download" do
   puts "data placed in ~/tmp/#{fetch(:database)}_dump.sql"
 end
 
-#import downloaded dump to local database
+desc 'import downloaded dump to local database'
 task "db:import" do
   puts "importing data to local database"
   system "psql -d #{fetch(:database_dev)} -c 'DROP SCHEMA public CASCADE;CREATE SCHEMA public;'"

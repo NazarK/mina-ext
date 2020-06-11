@@ -1,7 +1,1 @@
-require "mina/ext/version"
-
-module Mina
-  module Ext
-    # Your code goes here...
-  end
-end
+load File.expand_path("../ext/tasks.rake", __FILE__)
