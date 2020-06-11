@@ -1,14 +1,21 @@
 # mina-ext
 
 Adds commands to mina. Inspired by Heroku.
+
 Using these command in all my projects.
 
 mina db:pull - backup data (from production on server to local dev database)
+
 mina db:import - restore data from latest pull operation
+
 mina files:pull - backup public/system folder
+
 mina backup - backup db and files (db:import and files:pull)
+
 mina push m='comment' - push to repo with comment specified by 'm' parameter
+
 mina push - git commit all changes with empty comment (using '-' as comment)
+
 mina shell - login to current folder (instead of ssh logging into folder containing current)
 
 ## Installation
