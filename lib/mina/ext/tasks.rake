@@ -72,6 +72,12 @@ task "files:pull" do
   system command_line
 end
 
+task "data:pull" do
+  system 'mina db:pull'
+  system 'mina files:pull'
+  puts "DONE: #{Time.now}"  
+end
+
 task :backup do
   system 'mina db:pull'
   system 'mina files:pull'
