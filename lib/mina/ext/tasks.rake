@@ -98,3 +98,8 @@ end
 task :shutdown do
   system SHUTDOWN_CMD
 end
+
+#edit Last Migration
+task :lm do
+  system "vi `ls -Art ./db/migrate/*.rb | tail -n 1`"
+end
