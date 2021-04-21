@@ -9,7 +9,7 @@ db_config = YAML.load_file("#{Dir.getwd}/config/database.yml")
 
 if fetch(:database).nil?
   set :database, db_config["production"]["database"]
-end  
+end
 
 if fetch(:database_dev).nil?
   set :database_dev, db_config["development"]["database"]
@@ -68,14 +68,18 @@ end
 
 task "files:pull" do
   command_line = "rsync -azP root@#{fetch(:domain)}:#{fetch(:deploy_to)}/shared/public/system/ ./public/system"
-  puts "running rsync: #{command_line}"
+  puts "syncing PaperClip: #{command_line}"
+  system command_line
+
+  command_line = "rsync -azP root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/storage/ ./storage"
+  puts "syncing ActiveStorage: #{command_line}"
   system command_line
 end
 
 task "data:pull" do
   system 'mina db:pull'
   system 'mina files:pull'
-  puts "DONE: #{Time.now}"  
+  puts "DONE: #{Time.now}"
 end
 
 task :backup do
@@ -87,7 +91,7 @@ end
 task :shell do
   system "echo 'logging into shell on server'"
   system "ssh #{fetch(:user)}@#{fetch(:domain)} -t \"cd #{fetch(:deploy_to)}/current; bash --login\""
-end  
+end
 
 task :launch do
   puts LAUNCH_CMD
