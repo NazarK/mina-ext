@@ -112,7 +112,6 @@ end
 
 
 task "db:dump" do
-  command 'cd /media/extra'
   puts "dumping data remotely"
   #command "pg_dump #{fetch(:database)} -Fc --exclude-table-data 'messenger_messages' --exclude-table-data 'versions' --exclude-table-data 'delayed_jobs' --exclude-table-data 'telegram_queues'>/media/extra/#{fetch(:database)}_dump.dump"
   #command "pg_dump #{fetch(:database)} -Fc --exclude-table-data 'delayed_jobs' --exclude-table-data 'telegram_queues'>/media/extra/#{fetch(:database)}_dump.dump"
