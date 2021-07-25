@@ -107,3 +107,32 @@ end
 task :lm do
   system "vi `ls -Art ./db/migrate/*.rb | tail -n 1`"
 end
+
+
+
+
+task "db:dump" do
+  command 'cd /media/extra'
+  puts "dumping data remotely"
+  #command "pg_dump #{fetch(:database)} -Fc --exclude-table-data 'messenger_messages' --exclude-table-data 'versions' --exclude-table-data 'delayed_jobs' --exclude-table-data 'telegram_queues'>/media/extra/#{fetch(:database)}_dump.dump"
+  #command "pg_dump #{fetch(:database)} -Fc --exclude-table-data 'delayed_jobs' --exclude-table-data 'telegram_queues'>/media/extra/#{fetch(:database)}_dump.dump"
+  command "pg_dump #{fetch(:database)} -Fc >/tmp/#{fetch(:database)}_dump.dump"
+end
+
+task "db:dump_download" do
+  system "scp #{fetch(:user)}@#{fetch(:domain)}:/tmp/#{fetch(:database)}_dump.dump ~/tmp/"
+  puts "data placed in ~/tmp/#{fetch(:database)}_dump.dump"
+end
+
+task "db:dump_import" do
+  system "psql -d #{fetch(:database_dev)} -c 'DROP SCHEMA public CASCADE;CREATE SCHEMA public;'"
+  system "pg_restore -d #{fetch(:database_dev)} ~/tmp/#{fetch(:database)}_dump.dump"
+  system "rake db:migrate" if !ENV['NOMIGRATE']
+end
+
+#all three tasks
+task "db:dump_pull" do
+  system 'mina db:dump'
+  system 'mina db:dump_download'
+  system 'mina db:dump_import'
+end
