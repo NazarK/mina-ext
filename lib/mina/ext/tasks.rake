@@ -43,9 +43,9 @@ end
 
 #all three tasks
 task "db:pull" do
-  system 'mina db:zip'
-  system 'mina db:download'
-  system 'mina db:import'
+  invoke 'db:zip'
+  invoke 'db:download'
+  invoke 'db:import'
 end
 
 #backup current database, so it can be restored with db:import
@@ -56,7 +56,7 @@ end
 
 
 task :push do
-  #env var (when using "system 'mina push'" in deploy hook for example)
+  #env var (when using "invoke 'push'" in deploy hook for example)
   if !ENV["NOCOMMIT"] && !ENV["NOCOM"]
     comment = ENV['m'] || '-'
     puts "using commit comment: #{comment}"
@@ -77,14 +77,14 @@ task "files:pull" do
 end
 
 task "data:pull" do
-  system 'mina db:pull'
-  system 'mina files:pull'
+  invoke 'db:pull'
+  invoke 'files:pull'
   puts "DONE: #{Time.now}"
 end
 
 task :backup do
-  system 'mina db:pull'
-  system 'mina files:pull'
+  invoke 'db:pull'
+  invoke 'files:pull'
   puts "DONE: #{Time.now}"
 end
 
@@ -131,7 +131,7 @@ end
 
 #all three tasks
 task "db:dump_pull" do
-  system 'mina db:dump'
-  system 'mina db:dump_download'
-  system 'mina db:dump_import'
+  invoke 'db:dump'
+  invoke 'db:dump_download'
+  invoke 'db:dump_import'
 end
