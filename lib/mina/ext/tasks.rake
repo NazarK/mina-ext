@@ -137,7 +137,7 @@ task "db:dump_pull" do
 end
 
 #push and deploy
-task "pd"
+task "pd" do
   invoke 'push'
   invoke 'deploy'
 end
