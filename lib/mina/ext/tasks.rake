@@ -135,3 +135,9 @@ task "db:dump_pull" do
   invoke 'db:dump_download'
   invoke 'db:dump_import'
 end
+
+#push and deploy
+task "pd"
+  invoke 'push'
+  invoke 'deploy'
+end
