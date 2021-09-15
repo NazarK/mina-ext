@@ -43,7 +43,7 @@ end
 
 #all three tasks
 task "db:pull" do
-  invoke 'db:zip'
+  system 'mina db:zip' #system because should wait till zipped
   invoke 'db:download'
   invoke 'db:import'
 end
@@ -131,7 +131,7 @@ end
 
 #all three tasks
 task "db:dump_pull" do
-  invoke 'db:dump'
+  system 'mina db:dump' #такой вызов чтобы дамп закончился
   invoke 'db:dump_download'
   invoke 'db:dump_import'
 end
