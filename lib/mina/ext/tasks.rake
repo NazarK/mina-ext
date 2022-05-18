@@ -93,6 +93,7 @@ task :shell do
   system "ssh #{fetch(:user)}@#{fetch(:domain)} -t \"cd #{fetch(:deploy_to)}/current; bash --login\""
 end
 
+=begin
 task :launch do
   puts LAUNCH_CMD
   system SHUTDOWN_CMD
@@ -102,6 +103,7 @@ end
 task :shutdown do
   system SHUTDOWN_CMD
 end
+=end
 
 #edit Last Migration
 task :lm do
