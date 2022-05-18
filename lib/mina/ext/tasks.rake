@@ -67,11 +67,11 @@ task :push do
 end
 
 task "files:pull" do
-  command_line = "rsync -azP root@#{fetch(:domain)}:#{fetch(:deploy_to)}/shared/public/system/ ./public/system"
+  command_line = "rsync -azP root@#{fetch(:domain)}:#{fetch(:deploy_to)}/shared/public/system/ ./public/system --delete"
   puts "syncing PaperClip: #{command_line}"
   system command_line
 
-  command_line = "rsync -azP root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/storage/ ./storage"
+  command_line = "rsync -azP root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/storage/ ./storage --delete"
   puts "syncing ActiveStorage: #{command_line}"
   system command_line
 end
