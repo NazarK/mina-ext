@@ -7,12 +7,13 @@ require 'mina/rails'
 require 'yaml'
 db_config = YAML.load_file("#{Dir.getwd}/config/database.yml")
 
+require 'erb'
 if fetch(:database).nil?
-  set :database, db_config["production"]["database"]
+  set :database, ERB.new(db_config["production"]["database"]).result
 end
 
 if fetch(:database_dev).nil?
-  set :database_dev, db_config["development"]["database"]
+  set :database_dev, ERB.new(db_config["development"]["database"]).result
 end
 
 
