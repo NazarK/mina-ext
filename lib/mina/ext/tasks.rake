@@ -18,7 +18,7 @@ end
 
 
 desc 'zip on remote server'
-task "db:zip" do
+task "db:sql_zip" do
   command 'cd /tmp'
   puts "dumping data remotely"
   command "pg_dump #{fetch(:database)}>/tmp/#{fetch(:database)}_dump.sql"
@@ -26,7 +26,7 @@ task "db:zip" do
 end
 
 desc 'download data dump'
-task "db:download" do
+task "db:sql_download" do
   puts "downloading"
   system "mkdir ~/tmp 2>/dev/null"
   system "scp #{fetch(:user)}@#{fetch(:domain)}:/tmp/#{fetch(:database)}_dump.zip ~/tmp/"
@@ -35,7 +35,7 @@ task "db:download" do
 end
 
 desc 'import downloaded dump to local database'
-task "db:import" do
+task "db:sql_import" do
   puts "importing data to local database"
   system "psql -d #{fetch(:database_dev)} -c 'DROP SCHEMA public CASCADE;CREATE SCHEMA public;'"
   system "psql -d #{fetch(:database_dev)}< ~/tmp/#{fetch(:database)}_dump.sql"
@@ -43,10 +43,10 @@ task "db:import" do
 end
 
 #all three tasks
-task "db:pull" do
+task "db:sql_pull" do
   system 'mina db:zip' #system because should wait till zipped
-  invoke 'db:download'
-  invoke 'db:import'
+  invoke 'db:sql_download'
+  invoke 'db:sql_import'
 end
 
 #backup current database, so it can be restored with db:import
@@ -121,22 +121,23 @@ task "db:dump" do
   command "pg_dump #{fetch(:database)} -Fc >/tmp/#{fetch(:database)}_dump.dump"
 end
 
-task "db:dump_download" do
+task "db:download" do
+  system "mkdir ~/tmp"
   system "scp #{fetch(:user)}@#{fetch(:domain)}:/tmp/#{fetch(:database)}_dump.dump ~/tmp/"
   puts "data placed in ~/tmp/#{fetch(:database)}_dump.dump"
 end
 
-task "db:dump_import" do
+task "db:import" do
   system "psql -d #{fetch(:database_dev)} -c 'DROP SCHEMA public CASCADE;CREATE SCHEMA public;'"
   system "pg_restore -d #{fetch(:database_dev)} ~/tmp/#{fetch(:database)}_dump.dump"
   system "rake db:migrate" if !ENV['NOMIGRATE']
 end
 
 #all three tasks
-task "db:dump_pull" do
+task "db:pull" do
   system 'mina db:dump' #такой вызов чтобы дамп закончился
-  invoke 'db:dump_download'
-  invoke 'db:dump_import'
+  invoke 'db:download'
+  invoke 'db:import'
 end
 
 #push and deploy
