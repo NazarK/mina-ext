@@ -122,7 +122,7 @@ task "db:dump" do
 end
 
 task "db:download" do
-  system "mkdir ~/tmp"
+  system "mkdir ~/tmp -p"
   system "scp #{fetch(:user)}@#{fetch(:domain)}:/tmp/#{fetch(:database)}_dump.dump ~/tmp/"
   puts "data placed in ~/tmp/#{fetch(:database)}_dump.dump"
 end
