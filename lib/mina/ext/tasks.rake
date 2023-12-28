@@ -28,7 +28,7 @@ app_config.keys.each { |key| ENV.delete(key) }
 desc 'zip on remote server'
 task "db:sql_zip" do
   command 'cd /tmp'
-  puts "dumping data remotely"
+  puts "dumping data remotely, db:#{fetch(:database)}"
   command "pg_dump #{fetch(:database)}>/tmp/#{fetch(:database)}_dump.sql"
   command "rm #{fetch(:database)}_dump.zip; zip #{fetch(:database)}_dump #{fetch(:database)}_dump.sql; rm #{fetch(:database)}_dump.sql"
 end
@@ -44,7 +44,7 @@ end
 
 desc 'import downloaded dump to local database'
 task "db:sql_import" do
-  puts "importing data to local database"
+  puts "importing data to local database, db:#{fetch(:database_dev)}"
   system "psql -d #{fetch(:database_dev)} -c 'DROP SCHEMA public CASCADE;CREATE SCHEMA public;'"
   system "psql -d #{fetch(:database_dev)}< ~/tmp/#{fetch(:database)}_dump.sql"
   system "rake db:migrate" if !ENV['NOMIGRATE']
@@ -123,7 +123,7 @@ end
 
 
 task "db:dump" do
-  puts "dumping data remotely"
+  puts "dumping data remotely, db:#{fetch(:database)}"
   #command "pg_dump #{fetch(:database)} -Fc --exclude-table-data 'messenger_messages' --exclude-table-data 'versions' --exclude-table-data 'delayed_jobs' --exclude-table-data 'telegram_queues'>/media/extra/#{fetch(:database)}_dump.dump"
   #command "pg_dump #{fetch(:database)} -Fc --exclude-table-data 'delayed_jobs' --exclude-table-data 'telegram_queues'>/media/extra/#{fetch(:database)}_dump.dump"
   command "pg_dump #{fetch(:database)} -Fc >/tmp/#{fetch(:database)}_dump.dump"
