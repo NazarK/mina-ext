@@ -5,16 +5,24 @@ require 'mina/rails'
 #SHUTDOWN_CMD="cd #{fetch(:deploy_to)}/current; RAILS_ENV=production bundle exec thin stop --pid #{fetch(:deploy_to)}/shared/thin.pid || true"
 
 require 'yaml'
+require 'erb' #to calculate database.yml
 db_config = YAML.load_file("#{Dir.getwd}/config/database.yml")
+#figaro gem app config
+app_config = (YAML.load_file("#{Dir.getwd}/config/application.yml") rescue {})
+#just to make ERB calculation in database.yml work
+ENV.merge!(app_config) 
 
-require 'erb'
 if fetch(:database).nil?
-  set :database, ERB.new(db_config["production"]["database"]).result
+  prod_database = ERB.new(db_config["production"]["database"]).result
+  set :database, prod_database
 end
 
 if fetch(:database_dev).nil?
   set :database_dev, ERB.new(db_config["development"]["database"]).result
 end
+
+#restoring ENV, to avoid warnings when figaro will load it's vars
+app_config.keys.each { |key| ENV.delete(key) }
 
 
 desc 'zip on remote server'
