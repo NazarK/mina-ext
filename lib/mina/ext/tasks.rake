@@ -98,7 +98,7 @@ task :backup do
 end
 
 task :shell do
-  system "echo '➡️ 🚪 logging into shell on server'"
+  system "echo ' 🔓 logging into shell on server'"
   system "ssh #{fetch(:user)}@#{fetch(:domain)} -t \"cd #{fetch(:deploy_to)}/current; bash --login\""
 end
 
