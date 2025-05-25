@@ -98,7 +98,7 @@ task :backup do
 end
 
 task :shell do
-  system "echo 'logging into shell on server'"
+  system "echo '➡️ 🚪 logging into shell on server'"
   system "ssh #{fetch(:user)}@#{fetch(:domain)} -t \"cd #{fetch(:deploy_to)}/current; bash --login\""
 end
 
@@ -152,4 +152,21 @@ end
 task "pd" do
   invoke 'push'
   invoke 'deploy'
+end
+
+
+#put file on remote server (to update without git push for example)
+task :put do
+  file = ARGV[1]
+  cmd = "scp -C #{file} root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file}"
+  puts cmd
+  system cmd  
+end
+
+#get file from remote server
+task :get do
+  file = ARGV[1]
+  cmd = "scp -C root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file} #{file}"
+  puts cmd
+  system cmd  
 end

@@ -18,6 +18,10 @@ mina push - git commit all changes with empty comment (using '-' as comment)
 
 mina shell - login to current folder (instead of ssh logging into folder containing current)
 
+mina put app/file/path - put file from app structure on remote server in same place
+
+mina get app/file/path - get file from remote server and place it in app structure in same place
+
 ## Notes
 Database functions work with postgresql only. Database names are taken from config/database.yml.
 

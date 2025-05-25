@@ -1,5 +1,5 @@
 module Mina
   module Ext
-    VERSION = "0.4.41"
+    VERSION = "0.4.5"
   end
 end
