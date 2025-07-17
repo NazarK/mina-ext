@@ -6,10 +6,21 @@ require 'mina/rails'
 
 require 'yaml'
 require 'erb' #to calculate database.yml
-db_config = YAML.unsafe_load(File.read("#{Dir.getwd}/config/database.yml"))
-#figaro gem app config
-app_config = (YAML.unsafe_load(File.read("#{Dir.getwd}/config/application.yml")) rescue {})
-#just to make ERB calculation in database.yml work
+
+figaro_gem_config = "#{Dir.getwd}/config/application.yml"
+database_config = "#{Dir.getwd}/config/database.yml"
+
+#for later psych versions
+if YAML.respond_to?(:unsafe_load)
+  db_config = YAML.unsafe_load(File.read(database_config))
+  #figaro gem app config
+  app_config = (YAML.unsafe_load(File.read(figaro_gem_config)) rescue {})
+  #just to make ERB calculation in database.yml work
+else
+  db_config = YAML.load_file(database_config)
+  app_config = (YAML.load_file(figaro_gem_config) rescue {})
+end
+
 ENV.merge!(app_config) 
 
 if fetch(:database).nil?
