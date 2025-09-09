@@ -46,3 +46,7 @@ require 'mina/ext'
 ## Profit
 
 You should have 'mina db:pull' and other commands working. 
+
+## History
+
+0.4.81 - mina get - get file from remote server and place it in app structure in same place

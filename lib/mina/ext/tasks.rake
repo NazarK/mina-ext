@@ -177,12 +177,16 @@ end
 #get file from remote server
 task :get do
   file = ARGV[1]
-  
-  cmd = "mkdir -p #{file}"
+
+  # Ensure destination folder exists
+  dest_dir = File.dirname(file)
+  cmd = "mkdir -p #{dest_dir}"
   puts "> #{cmd}"
   system cmd
-
+  
+  # Copy the file from remote
   cmd = "scp -C root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file} #{file}"
   puts "> #{cmd}"
-  system cmd  
+  system cmd
+  
 end
