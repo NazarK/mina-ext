@@ -166,27 +166,22 @@ task "pd" do
 end
 
 
-#put file on remote server (to update without git push for example)
+#put file (folder) on remote server (to update without git push for example)
 task :put do
   file = ARGV[1]
-  cmd = "scp -Cr #{file} root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file}"
-  puts cmd
+  cmd = "rsync -avzP -e ssh #{file} root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{File.dirname(file)}/"
+  puts "💻 #{cmd}"
   system cmd  
 end
 
-#get file from remote server
+#get file (folder) from remote server (to get uploaded images for example)
 task :get do
   file = ARGV[1]
 
-  # Ensure destination folder exists
-  dest_dir = File.dirname(file)
-  cmd = "mkdir -p #{dest_dir}"
-  puts "> #{cmd}"
-  system cmd
-  
   # Copy the file from remote
-  cmd = "scp -Cr root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file} #{file}"
-  puts "> #{cmd}"
+  cmd = "rsync -avzP -e ssh root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file} #{File.dirname(file)}/"
+
+  puts "💻 #{cmd}"
   system cmd
   
 end
