@@ -169,7 +169,7 @@ end
 #put file on remote server (to update without git push for example)
 task :put do
   file = ARGV[1]
-  cmd = "scp -C #{file} root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file}"
+  cmd = "scp -Cr #{file} root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file}"
   puts cmd
   system cmd  
 end
