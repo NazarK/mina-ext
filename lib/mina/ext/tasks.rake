@@ -185,7 +185,7 @@ task :get do
   system cmd
   
   # Copy the file from remote
-  cmd = "scp -C root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file} #{file}"
+  cmd = "scp -Cr root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file} #{file}"
   puts "> #{cmd}"
   system cmd
   
