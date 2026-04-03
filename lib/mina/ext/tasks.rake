@@ -21,7 +21,7 @@ else
   app_config = (YAML.load_file(figaro_gem_config) rescue {})
 end
 
-ENV.merge!(app_config) 
+ENV.merge!(app_config)
 
 if fetch(:database).nil?
   prod_database = ERB.new(db_config["production"]["database"]).result
@@ -171,7 +171,7 @@ task :put do
   file = ARGV[1]
   cmd = "rsync -avzP -e ssh #{file} root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{File.dirname(file)}/"
   puts "💻 #{cmd}"
-  system cmd  
+  system cmd
 end
 
 #get file (folder) from remote server (to get uploaded images for example)
@@ -183,5 +183,34 @@ task :get do
 
   puts "💻 #{cmd}"
   system cmd
-  
+
+end
+
+
+#activestorage get
+task "as:get" do
+  keys = ARGV[1..-1]
+  if keys.nil? || keys.empty?
+    puts "❌ No activestorage keys provided"
+    exit 1
+  end
+
+  keys.each do |key|
+
+    file = "storage/"+File.join(
+      key[0..1],   # "ab"
+      key[2..3],   # "c1"
+      key          # "abc123xyz456"
+    )
+
+    # Copy the file from remote
+    cmd = "rsync -avzP -e ssh root@#{fetch(:domain)}:#{fetch(:deploy_to)}/current/#{file} #{File.dirname(file)}/"
+
+    puts "💻 #{cmd}"
+    system cmd
+
+  end
+
+  exit 0
+
 end
